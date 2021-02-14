@@ -4,6 +4,7 @@ const path = require('path');
 const Campground = require('./models/campground');
 const methodOverride = require('method-override');
 const mongoose = require('mongoose');
+const ejsMate = require('ejs-mate');
 const campground = require('./models/campground');
 
 mongoose.connect('mongodb://localhost:27017/camp', { useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true });
@@ -15,7 +16,7 @@ db.once('open', function() {
 });
 
 
-
+app.engine('ejs', ejsMate);
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
