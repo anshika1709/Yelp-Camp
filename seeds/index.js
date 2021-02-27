@@ -32,15 +32,7 @@ const seedDB = async() => {
                     cities[random1000].latitude,
                 ]
             },
-            images: [{
-                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ahfnenvca4tha00h2ubt.png',
-                    filename: 'YelpCamp/ahfnenvca4tha00h2ubt'
-                },
-                {
-                    url: 'https://res.cloudinary.com/douqbebwk/image/upload/v1600060601/YelpCamp/ruyoaxgf72nzpi4y6cdi.png',
-                    filename: 'YelpCamp/ruyoaxgf72nzpi4y6cdi'
-                }
-            ]
+            image: 'https://source.unsplash.com/collection/483251',
         })
         await camp.save();
     }
