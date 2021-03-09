@@ -36,6 +36,7 @@ module.exports.showCampground = async (req, res) => {
     res.render("campgrounds/show", { campgroundById });
 }
 
+<<<<<<< HEAD
 module.exports.renderEditForm = async (req, res) => {
     const { id } = req.params;
     const campgroundById = await Campground.findById(id)
@@ -52,6 +53,11 @@ module.exports.updateCampground = async (req, res) => {
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
     updatedCampground.images.push(...imgs);
     await updatedCampground.save();
+=======
+module.exports.updateCampground = async (req, res, next) => {
+    const { id } = req.params;
+    const updatedCampground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+>>>>>>> 5b66d10 (Add multiple ima0ge upload feature)
     req.flash('success', 'Successfully updated a campground!');
     res.redirect(`/campgrounds/${updatedCampground._id}`);
 
