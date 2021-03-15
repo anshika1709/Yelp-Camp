@@ -36,9 +36,22 @@ module.exports.showCampground = async (req, res) => {
     res.render("campgrounds/show", { campgroundById });
 }
 
-module.exports.updateCampground = async (req, res, next) => {
+module.exports.renderEditForm = async (req, res) => {
+    const { id } = req.params;
+    const campgroundById = await Campground.findById(id)
+    if (!campgroundById) {
+        req.flash('error', 'Cannot find that campground!');
+        return res.redirect('/campgrounds');
+    }
+    res.render('campgrounds/edit', { campgroundById });
+}
+
+module.exports.updateCampground = async (req, res) => {
     const { id } = req.params;
     const updatedCampground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+    const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
+    updatedCampground.images.push(...imgs);
+    await updatedCampground.save();
     req.flash('success', 'Successfully updated a campground!');
     res.redirect(`/campgrounds/${updatedCampground._id}`);
 
