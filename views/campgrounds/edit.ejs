@@ -2,30 +2,38 @@
     <div class="row">
         <h1 class="text-center">Edit Campground</h1>
         <div class="col-6 offset-3">
-            <form action="/campgrounds/<%=campgroundById._id%>?_method=PUT" method="POST" novalidate class="validated-form" required>
+            <form action="/campgrounds/<%=campgroundById._id%>?_method=PUT" method="POST" novalidate
+                class="validated-form" required enctype="multipart/form-data">
                 <div class="mb-3">
                     <label class="form-label" for="title">Title</label>
-                    <input class="form-control" type="text" id="title" name="campground[title]" value="<%=campgroundById.title %>" required>
+                    <input class="form-control" type="text" id="title" name="campground[title]"
+                        value="<%=campgroundById.title %>" required>
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="location">Location</label>
-                    <input class="form-control" type="text" id="location" name="campground[location]" value="<%=campgroundById.location %>" required>
+                    <input class="form-control" type="text" id="location" name="campground[location]"
+                        value="<%=campgroundById.location %>" required>
                 </div>
                 <div class="mb-3">
-                    <label class="form-label" for="image">Image Url</label>
-                    <input class="form-control" type="text" id="image" name="campground[image]" value="<%=campgroundById.image %>" required>
+                    <label class="form-label" for="image">Add Images</label>
+                    <input type="file" name="image" id="" multiple>
+                    <!-- Added this for changing url
+                    <input class="form-control" type="text" id="image" name="campground[image]" value="<%=campgroundById.image %>" required> -->
                 </div>
                 <div class="mb-3">
                     <label class="form-label" for="price">Campground Price</label>
                     <div class="input-group">
                         <span class="input-group-text" id="price-label">$</span>
-                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price" aria-describedby="price-label" name="campground[price]" value="<%=campgroundById.price %>" required>
+                        <input type="text" class="form-control" id="price" placeholder="0.00" aria-label="price"
+                            aria-describedby="price-label" name="campground[price]" value="<%=campgroundById.price %>"
+                            required>
                     </div>
                 </div>
 
                 <div class="mb-3">
                     <label class="form-label" for="description">Description</label>
-                    <textarea class="form-control" type="text" id="description" name="campground[description]" required><%= campgroundById.description%></textarea>
+                    <textarea class="form-control" type="text" id="description" name="campground[description]"
+                        required><%= campgroundById.description%></textarea>
                 </div>
                 <div class="mb-3">
                     <button class="btn btn-info">Update Campground</button>
