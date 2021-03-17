@@ -4,17 +4,17 @@ const mapBoxToken = process.env.MAPBOX_TOKEN;
 const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
 const { cloudinary } = require("../cloudinary");
 
-module.exports.index = async (req, res) => {
-    const allCampgrounds = await Campground.find({});
+module.exports.index = async(req, res) => {
+    const allCampgrounds = await Campground.find({}).populate('popupText');
     res.render("campgrounds/index", { allCampgrounds });
 }
 
-module.exports.renderNewForm = async (req, res) => {
+module.exports.renderNewForm = async(req, res) => {
     res.render("campgrounds/new");
 }
 
 
-module.exports.createCampground = async (req, res, next) => {
+module.exports.createCampground = async(req, res, next) => {
     const geoData = await geocoder.forwardGeocode({
         query: req.body.campground.location,
         limit: 1
@@ -30,7 +30,7 @@ module.exports.createCampground = async (req, res, next) => {
 
 }
 
-module.exports.showCampground = async (req, res) => {
+module.exports.showCampground = async(req, res) => {
     const campgroundById = await Campground.findById(req.params.id).populate({
         path: 'reviews',
         populate: {
@@ -45,7 +45,7 @@ module.exports.showCampground = async (req, res) => {
     res.render("campgrounds/show", { campgroundById });
 }
 
-module.exports.renderEditForm = async (req, res) => {
+module.exports.renderEditForm = async(req, res) => {
     const { id } = req.params;
     const campgroundById = await Campground.findById(id)
     if (!campgroundById) {
@@ -55,9 +55,9 @@ module.exports.renderEditForm = async (req, res) => {
     res.render('campgrounds/edit', { campgroundById });
 }
 
-module.exports.updateCampground = async (req, res) => {
+module.exports.updateCampground = async(req, res) => {
     const { id } = req.params;
-    const updatedCampground = await Campground.findByIdAndUpdate(id, { ...req.body.campground });
+    const updatedCampground = await Campground.findByIdAndUpdate(id, {...req.body.campground });
     const imgs = req.files.map(f => ({ url: f.path, filename: f.filename }));
     updatedCampground.images.push(...imgs);
     await updatedCampground.save();
@@ -72,7 +72,7 @@ module.exports.updateCampground = async (req, res) => {
 
 }
 
-module.exports.deleteCampground = async (req, res) => {
+module.exports.deleteCampground = async(req, res) => {
     const { id } = req.params;
     await Campground.findByIdAndDelete(id);
     req.flash('success', 'Successfully deleted a campground!');
