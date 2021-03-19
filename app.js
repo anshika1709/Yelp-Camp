@@ -20,7 +20,7 @@ const mongoSanitize = require('express-mongo-sanitize');
 const userRoutes = require('./routes/users');
 const campgroundRoutes = require('./routes/campgrounds');
 const reviewRoutes = require('./routes/reviews');
-const MongoDBStore = require("connect-mongo")(session);
+const MongoDBStore = require("connect-mongodb-session")(session);
 
 const dbUrl = process.env.DB_URL || 'mongodb://localhost:27017/yelp-camp';
 
@@ -104,6 +104,8 @@ app.use((err, req, res, next) => {
     if (!err.message) err.message = 'Oh No, Something Went Wrong!'
     res.status(statusCode).render('error', { err })
 })
-app.listen(3000, () => {
-    console.log("Serving");
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => {
+    console.log(`Serving on port ${port}`)
 });
